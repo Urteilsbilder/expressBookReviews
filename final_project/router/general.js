@@ -31,28 +31,83 @@ public_users.post("/register", (req,res) => {
 
 // Get the book list available in the shop
 public_users.get('/',function (req, res) {
-  return res.send(JSON.stringify(books,null,4));
+    //old non promise based task 1 
+    //return res.send(JSON.stringify(books,null,4));
+
+    //task 10
+    const promise = new Promise((resolve,reject) => {
+        resolve(books)
+      });
+
+    return promise.then((result) => {
+        return res.send(JSON.stringify(result));
+    }).catch((err) => {
+        return res.status(404).json(err);
+    });
 });
 
 // Get book details based on ISBN
 public_users.get('/isbn/:isbn',function (req, res) {
-    const isbn = req.params.isbn
-    const book = Object.values(books).find((book) => book.isbn === isbn)
-     return res.send(JSON.stringify(book));
+    //old non promise based task 2
+    //const isbn = req.params.isbn
+    //const book = Object.values(books).find((book) => book.isbn === isbn)
+     //return res.send(JSON.stringify(book));
+
+     //Task 11
+     const isbn = req.params.isbn
+
+     const promise = new Promise((resolve,reject) => {
+         const book = Object.values(books).find((book) => book.isbn === isbn)
+         resolve(book)
+      });
+
+    return promise.then((result) => {
+        return res.send(JSON.stringify(result));
+    }).catch((err) => {
+        return res.status(404).json(err);
+    });
  });
   
 // Get book details based on author
 public_users.get('/author/:author',function (req, res) {
+    //old non promise based task 3
+    //const author = req.params.author
+    //const booksArr = Object.values(books).filter((book) => book.author === author)
+    //return res.send(JSON.stringify(booksArr));
+
+    //task 12
     const author = req.params.author
-    const booksArr = Object.values(books).filter((book) => book.author === author)
-  return res.send(JSON.stringify(booksArr));
+
+    const promise = new Promise((resolve,reject) => {
+        const booksArr = Object.values(books).filter((book) => book.author === author)
+        resolve(booksArr)
+     });
+
+   return promise.then((result) => {
+       return res.send(JSON.stringify(result));
+   }).catch((err) => {
+       return res.status(404).json(err);
+   });
 });
 
 // Get all books based on title
 public_users.get('/title/:title',function (req, res) {
+    //old non promise based task 4
+    //const title = req.params.title
+    //const booksArr = Object.values(books).filter((book) => book.title === title)
+    //return res.send(JSON.stringify(booksArr));
+
     const title = req.params.title
-    const booksArr = Object.values(books).filter((book) => book.title === title)
-    return res.send(JSON.stringify(booksArr));
+    const promise = new Promise((resolve,reject) => {
+        const booksArr = Object.values(books).filter((book) => book.title === title)
+        resolve(booksArr)
+     });
+
+     return promise.then((result) => {
+        return res.send(JSON.stringify(result));
+    }).catch((err) => {
+        return res.status(404).json(err);
+    });
 });
 
 //  Get book review
